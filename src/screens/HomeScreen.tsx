@@ -6,9 +6,9 @@ import { v4 as uuidv4 } from 'uuid';
 import React from "react";
 import 'react-native-get-random-values';
 import { useDispatch, useSelector } from "react-redux";
-import { addTask, updateTask, deleteTask } from "../../store/actions/tasks";
-import { RootState } from "../../store/reducers";
-import { ADD_TASK } from "../../store/types";
+import { addTask, updateTask, deleteTask } from "../../store/slices/tasks";
+import { RootState } from "../../store/slices";
+import { AppDispatch } from "../../store";
 
 type Props = {};
 export interface IToDo {
@@ -20,23 +20,22 @@ export interface IToDo {
 export function HomeScreen() {
     const navigation = useNavigation<HomeScreenNavigationProp>();
 
-    const dispatch = useDispatch();
-    const toDoList = useSelector((state: RootState) => state.tasks);
-    const [value, setValue] = useState<string>("");
+    const dispatch = useDispatch<AppDispatch>();
+    const toDos = useSelector((state: RootState) => state.tasks);
+    const [newTodo, setNewTodo] = useState<string>("");
 
     const [error, showError] = useState<Boolean>(false);
-    const [animationValues, setAnimationValues] = useState(toDoList.map(() => new Animated.Value(1)));
+    const [animationValues, setAnimationValues] = useState(toDos.map(() => new Animated.Value(1)));
 
     const handleSubmit = (): void => {
-        if (value.trim()) {
-            const newTask = { id: uuidv4(), text: value, completed: false };
+        if (newTodo.trim()) {
+            const newTask = { id: uuidv4(), text: newTodo, completed: false };
             dispatch(addTask(newTask));
-            console.log(newTask);
             showError(false);
         }
         else
             showError(true);
-        setValue("");
+        setNewTodo("");
     };
 
     const toggleComplete = (task: IToDo): void => {
@@ -60,9 +59,9 @@ export function HomeScreen() {
             <View style={styles.inputWrapper}>
                 <TextInput
                     placeholder="Enter your todo task"
-                    value={value}
+                    value={newTodo}
                     onChangeText={e => {
-                        setValue(e);
+                        setNewTodo(e);
                         showError(false);
                     }}
                     style={styles.inputBox}
@@ -73,8 +72,8 @@ export function HomeScreen() {
                 <Text style={styles.error}>Error: Input field is empty</Text>
             )}
             <Text style={styles.subtitle}>Your tasks: </Text>
-            {toDoList.length === 0 && <Text>No to do task available</Text>}
-            {toDoList.map((toDo: IToDo, index: number) => (
+            {toDos.length === 0 && <Text>No to do task available</Text>}
+            {toDos.map((toDo: IToDo, index: number) => (
                 <Animated.View
                     style={{
                         opacity: animationValues[index],

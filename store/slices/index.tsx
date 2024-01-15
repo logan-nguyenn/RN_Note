@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import tasksReducer, { TasksState } from './tasks';
 
 export interface RootState {
-  tasks: TasksState; // Ensure that TasksState is correctly defined and imported
+  tasks: TasksState;
 }
 
 const rootReducer = combineReducers({

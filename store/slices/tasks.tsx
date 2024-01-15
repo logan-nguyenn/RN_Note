@@ -19,14 +19,11 @@ const tasksSlice = createSlice({
       }
     },
     addTask: (state, action: PayloadAction<IToDo>) => {
-      console.log(action.payload);
       state.push(action.payload);
     },
-    else: (state) => {
-      console.log(state)
+    default: (state, action: PayloadAction<any>) => {
       return state;
     }
-    // Other reducers...
   },
 });
 

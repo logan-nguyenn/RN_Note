@@ -3,7 +3,7 @@ import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 import { DetailsScreenRouteProp } from '../../navigation/types/types';
 import { useDispatch } from 'react-redux';
 import { useEffect, useState } from "react";
-import { deleteTask, updateTask } from "../../store/actions/tasks";
+import { deleteTask, updateTask } from "../../store/slices/tasks";
 import React from "react";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -26,7 +26,7 @@ export default function TaskDetail() {
                         onPress={handleDelete}
                     />
                     <Ionicons
-                        name="update-outline"
+                        name="create-outline"
                         size={25}
                         color="black"
                         onPress={() => handleUpdate(value)}
