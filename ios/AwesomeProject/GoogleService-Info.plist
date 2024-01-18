@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>1040709611579-4mci5tqb759t312sg6gnvhcmr4prcjj8.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDWEJ1xP9UTYJz46n0xcVmzBK5Hk-QW_KI</string>
+	<key>BUNDLE_ID</key>
+	<string>org.reactjs.native.example.AwesomeProject</string>
+	<key>CLIENT_ID</key>
+	<string>1040709611579-tk4dlcvh78qogl7s3a8pn4f59pdqf62l.apps.googleusercontent.com</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1040709611579</string>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1040709611579:ios:1a70b852013ae64579ac1e</string>
+	<key>IS_ADS_ENABLED</key>
+	<false/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<false/>
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
+	</dict>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>PROJECT_ID</key>
+	<string>todo-950d1</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1040709611579-tk4dlcvh78qogl7s3a8pn4f59pdqf62l</string>
+	<key>STORAGE_BUCKET</key>
+	<string>todo-950d1.appspot.com</string>
+</dict>
+</plist>

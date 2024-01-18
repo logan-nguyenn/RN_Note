@@ -1,11 +1,17 @@
 import type {
     CompositeNavigationProp,
+    NavigationProp,
+    ParamListBase,
     RouteProp,
   } from '@react-navigation/native';
   import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
   import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 
   
+  export type SignInNavigatorParamList = {
+    navigation: NavigationProp<ParamListBase>;
+  };
+
   export type HomeStackNavigatorParamList = {
     Home: undefined;
     Details: {

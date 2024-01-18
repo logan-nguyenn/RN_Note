@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IToDo } from '../../src/screens/HomeScreen';
+import { IToDo } from '../../screens/HomeScreen';
 
 export type TasksState = IToDo[];
 

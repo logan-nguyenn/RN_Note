@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { Animated, Button, LayoutAnimation, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { useNavigation } from '@react-navigation/native';
-import { HomeScreenNavigationProp } from '../../navigation/types/types'
+import { HomeScreenNavigationProp } from '../navigation/types/types'
 import { v4 as uuidv4 } from 'uuid';
 import React from "react";
 import 'react-native-get-random-values';
 import { useDispatch, useSelector } from "react-redux";
-import { addTask, updateTask, deleteTask } from "../../store/slices/tasks";
-import { RootState } from "../../store/slices";
-import { AppDispatch } from "../../store";
+import { addTask, updateTask, deleteTask } from "../store/slices/tasks";
+import { RootState } from "../store/slices";
+import { AppDispatch } from "../store";
 
 type Props = {};
 export interface IToDo {

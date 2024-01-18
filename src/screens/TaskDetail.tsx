@@ -1,9 +1,9 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Button, StyleSheet, Text, TextInput, View } from "react-native";
-import { DetailsScreenRouteProp } from '../../navigation/types/types';
+import { DetailsScreenRouteProp } from '../navigation/types/types';
 import { useDispatch } from 'react-redux';
 import { useEffect, useState } from "react";
-import { deleteTask, updateTask } from "../../store/slices/tasks";
+import { deleteTask, updateTask } from "../store/slices/tasks";
 import React from "react";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
