@@ -4,14 +4,16 @@ import { HomeScreen, IToDo } from './src/screens/HomeScreen'
 import TaskDetail from "./src/screens/TaskDetail";
 import React from "react";
 import { Provider } from 'react-redux';
-import store from './src/store';
+import store, { persistor } from './src/store';
 import SignInScreen from "./src/screens/SignInScreen";
+import { PersistGate } from "redux-persist/integration/react";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="SignIn">
           <Stack.Screen name="SignIn" component={SignInScreen} />
@@ -19,6 +21,7 @@ export default function App() {
           <Stack.Screen name="Details" component={TaskDetail} />
         </Stack.Navigator>
       </NavigationContainer>
+      </PersistGate>
     </Provider>
   )
 }

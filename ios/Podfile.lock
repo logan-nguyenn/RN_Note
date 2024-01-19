@@ -651,14 +651,37 @@ PODS:
     - React-Core (= 0.73.0)
     - React-jsi (= 0.73.0)
     - ReactCommon/turbomodule/core (= 0.73.0)
+  - Firebase (10.19.0):
+    - Firebase/Core (= 10.19.0)
   - Firebase/Auth (10.19.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 10.19.0)
+  - Firebase/Core (10.19.0):
+    - Firebase/CoreOnly
+    - FirebaseAnalytics (~> 10.19.0)
   - Firebase/CoreOnly (10.19.0):
     - FirebaseCore (= 10.19.0)
   - Firebase/Firestore (10.19.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 10.19.0)
+  - FirebaseAnalytics (10.19.0):
+    - FirebaseAnalytics/AdIdSupport (= 10.19.0)
+    - FirebaseCore (~> 10.0)
+    - FirebaseInstallations (~> 10.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
+    - GoogleUtilities/MethodSwizzler (~> 7.11)
+    - GoogleUtilities/Network (~> 7.11)
+    - "GoogleUtilities/NSData+zlib (~> 7.11)"
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - FirebaseAnalytics/AdIdSupport (10.19.0):
+    - FirebaseCore (~> 10.0)
+    - FirebaseInstallations (~> 10.0)
+    - GoogleAppMeasurement (= 10.19.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
+    - GoogleUtilities/MethodSwizzler (~> 7.11)
+    - GoogleUtilities/Network (~> 7.11)
+    - "GoogleUtilities/NSData+zlib (~> 7.11)"
+    - nanopb (< 2.30910.0, >= 2.30908.0)
   - FirebaseAppCheckInterop (10.20.0)
   - FirebaseAuth (10.19.0):
     - FirebaseAppCheckInterop (~> 10.17)
@@ -694,6 +717,11 @@ PODS:
     - "gRPC-C++ (~> 1.49.1)"
     - leveldb-library (~> 1.22)
     - nanopb (< 2.30910.0, >= 2.30908.0)
+  - FirebaseInstallations (10.20.0):
+    - FirebaseCore (~> 10.0)
+    - GoogleUtilities/Environment (~> 7.8)
+    - GoogleUtilities/UserDefaults (~> 7.8)
+    - PromisesObjC (~> 2.1)
   - FirebaseSharedSwift (10.20.0)
   - Flipper (0.201.0):
     - Flipper-Folly (~> 2.6)
@@ -753,6 +781,26 @@ PODS:
     - FlipperKit/FlipperKitNetworkPlugin
   - fmt (6.2.1)
   - glog (0.3.5)
+  - GoogleAppMeasurement (10.19.0):
+    - GoogleAppMeasurement/AdIdSupport (= 10.19.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
+    - GoogleUtilities/MethodSwizzler (~> 7.11)
+    - GoogleUtilities/Network (~> 7.11)
+    - "GoogleUtilities/NSData+zlib (~> 7.11)"
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - GoogleAppMeasurement/AdIdSupport (10.19.0):
+    - GoogleAppMeasurement/WithoutAdIdSupport (= 10.19.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
+    - GoogleUtilities/MethodSwizzler (~> 7.11)
+    - GoogleUtilities/Network (~> 7.11)
+    - "GoogleUtilities/NSData+zlib (~> 7.11)"
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - GoogleAppMeasurement/WithoutAdIdSupport (10.19.0):
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
+    - GoogleUtilities/MethodSwizzler (~> 7.11)
+    - GoogleUtilities/Network (~> 7.11)
+    - "GoogleUtilities/NSData+zlib (~> 7.11)"
+    - nanopb (< 2.30910.0, >= 2.30908.0)
   - GoogleSignIn (7.0.0):
     - AppAuth (~> 1.5)
     - GTMAppAuth (< 3.0, >= 1.3)
@@ -1941,6 +1989,7 @@ DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
+  - Firebase
   - FirebaseCore
   - FirebaseCoreExtension
   - FirebaseFirestoreInternal
@@ -2030,6 +2079,7 @@ SPEC REPOS:
     - BoringSSL-GRPC
     - CocoaAsyncSocket
     - Firebase
+    - FirebaseAnalytics
     - FirebaseAppCheckInterop
     - FirebaseAuth
     - FirebaseCore
@@ -2037,6 +2087,7 @@ SPEC REPOS:
     - FirebaseCoreInternal
     - FirebaseFirestore
     - FirebaseFirestoreInternal
+    - FirebaseInstallations
     - FirebaseSharedSwift
     - Flipper
     - Flipper-Boost-iOSX
@@ -2047,6 +2098,7 @@ SPEC REPOS:
     - Flipper-PeerTalk
     - FlipperKit
     - fmt
+    - GoogleAppMeasurement
     - GoogleSignIn
     - GoogleUtilities
     - "gRPC-C++"
@@ -2186,6 +2238,7 @@ SPEC CHECKSUMS:
   FBLazyVector: 39ba45baf4e398618f8b3a4bb6ba8fcdb7fc2133
   FBReactNativeSpec: 20cfca68498e27879514790359289d1df2b52c56
   Firebase: 63ce8ece0d43743dc28eacac0c6867a2d7fd5a9d
+  FirebaseAnalytics: 87513010b13b7c8610164d3602ea10571f76afc1
   FirebaseAppCheckInterop: e81bdb1cdb82f8e0cef353ba5018a8402682032c
   FirebaseAuth: 2492acdcd1245d841fabdf58a050d6aa07dfce3f
   FirebaseCore: dc5c7badf99d47613c52b2e3a57a64cd187f8554
@@ -2193,6 +2246,7 @@ SPEC CHECKSUMS:
   FirebaseCoreInternal: efeeb171ac02d623bdaefe121539939821e10811
   FirebaseFirestore: 9b9b21120c1a0cb4f2789ffb7fbb9138f94c47eb
   FirebaseFirestoreInternal: 0dc0762afd68192e9d45c31d3dd3017accc84333
+  FirebaseInstallations: 558b1da7d65afeb996fd5c814332f013234ece4e
   FirebaseSharedSwift: 2fbf73618288b7a36b2014b957745dcdd781389e
   Flipper: c7a0093234c4bdd456e363f2f19b2e4b27652d44
   Flipper-Boost-iOSX: fd1e2b8cbef7e662a122412d7ac5f5bea715403c
@@ -2204,6 +2258,7 @@ SPEC CHECKSUMS:
   FlipperKit: 37525a5d056ef9b93d1578e04bc3ea1de940094f
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: c5d68082e772fa1c511173d6b30a9de2c05a69a2
+  GoogleAppMeasurement: 68afe759316673c6554dac35a0c7ae8f5d6cb4ed
   GoogleSignIn: b232380cf495a429b8095d3178a8d5855b42e842
   GoogleUtilities: 0759d1a57ebb953965c2dfe0ba4c82e95ccc2e34
   "gRPC-C++": 2df8cba576898bdacd29f0266d5236fa0e26ba6a
@@ -2269,6 +2324,6 @@ SPEC CHECKSUMS:
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: 44003f970aa541b79dfdd59cf236fda41bd5890f
 
-PODFILE CHECKSUM: 5298ff84310d8cfc1bb11af3932e7e522898bc24
+PODFILE CHECKSUM: 361b162ba0495755bacd64dc91a514db5d657e88
 
 COCOAPODS: 1.14.3

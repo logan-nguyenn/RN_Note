@@ -3,21 +3,30 @@ import { GoogleSignin, GoogleSigninButton } from '@react-native-google-signin/go
 import React, { useEffect, useState } from 'react';
 import { Alert, Button, StyleSheet, View } from 'react-native';
 import { SignInNavigatorParamList } from '../navigation/types/types';
-import { FIREBASE_WEB_KEY } from '@env';
+import { FIREBASE_IOS_KEY, FIREBASE_WEB_KEY } from '@env';
+import { useDispatch } from 'react-redux';
+import { login } from '../store/slices/auth';
 
 
 const SignInScreen: React.FC<SignInNavigatorParamList> = ({ navigation }) => {
     const [initializing, setInitializing] = useState(true);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         GoogleSignin.configure({
             webClientId: FIREBASE_WEB_KEY, 
+            iosClientId: FIREBASE_IOS_KEY,
         });
-    }, []);
 
-    useEffect(() => {
         const subscriber = auth().onAuthStateChanged(async (user) => {
             if (user) {
+                const userInfo = {
+                    uid: user.uid,
+                    displayName: user.displayName,
+                    email: user.email,
+                    photoURL: user.photoURL,
+                }
+                dispatch(login({user: userInfo, isLoggedIn: true}));
                 navigation.navigate('Home');
             } else {
                 setInitializing(false);
@@ -34,6 +43,7 @@ const SignInScreen: React.FC<SignInNavigatorParamList> = ({ navigation }) => {
             await auth().signInWithCredential(googleCredential);
         } catch (error) {
             if (error instanceof Error) {
+                console.log(error.message);
                 Alert.alert('Sign in Error', error.message);
             } else {
                 Alert.alert('Sign in Error', 'An unknown error occurred');
