@@ -36,7 +36,7 @@ export function HomeScreen() {
     useEffect(() => {
         const init = async () => {
             const storedUserId = await getUserId();
-            setUserId(storedUserId); 
+            setUserId(storedUserId);
             if (storedUserId) {
                 dispatch(fetchTasks(storedUserId));
             }
@@ -93,46 +93,46 @@ export function HomeScreen() {
             <Text style={styles.subtitle}>Your tasks: </Text>
             {toDos.length === 0 && <Text>No to do task available</Text>}
             <FlatList
-            data={toDos}
-            renderItem={({ item, index }) => (
-                <Animated.View
-                    style={{
-                        opacity: animationValues[index],
-                    }}
-                    key={`${index}_${item.text}`}
-                >
-                    <View style={styles.listItem} key={`${index}_${item.text}`}>
-                        <Text
-                            style={[
-                                styles.task,
-                                { textDecorationLine: item.completed ? "line-through" : "none" }
-                            ]}
-                            onPress={() => openTaskDetail(item)}
-                        >
-                            {item.text}
-                        </Text>
-                        <TouchableOpacity
-                            style={styles.toggleButton}
-                            onPress={() => { toggleComplete(item) }}
-                        >
-                            <Text>{item.completed ? "UnDo" : "Complete"}</Text>
-                        </TouchableOpacity>
+                data={toDos}
+                renderItem={({ item, index }) => (
+                    <Animated.View
+                        style={{
+                            opacity: animationValues[index],
+                        }}
+                        key={`${index}_${item.text}`}
+                    >
+                        <View style={styles.listItem} key={`${index}_${item.text}`}>
+                            <Text
+                                style={[
+                                    styles.task,
+                                    { textDecorationLine: item.completed ? "line-through" : "none" }
+                                ]}
+                                onPress={() => openTaskDetail(item)}
+                            >
+                                {item.text}
+                            </Text>
+                            <TouchableOpacity
+                                style={styles.toggleButton}
+                                onPress={() => { toggleComplete(item) }}
+                            >
+                                <Text>{item.completed ? "UnDo" : "Complete"}</Text>
+                            </TouchableOpacity>
 
-                        <TouchableOpacity
-                            style={styles.deleteButton}
-                            onPress={() => { removeItem(item.id) }}
-                        >
-                            <Ionicons
-                                name="trash-outline"
-                                size={20}
-                                color="white"
-                            />
-                        </TouchableOpacity>
-                    </View>
-                </Animated.View>
-        
-            )}
-            keyExtractor={item => item.id}
+                            <TouchableOpacity
+                                style={styles.deleteButton}
+                                onPress={() => { removeItem(item.id) }}
+                            >
+                                <Ionicons
+                                    name="trash-outline"
+                                    size={20}
+                                    color="white"
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    </Animated.View>
+
+                )}
+                keyExtractor={item => item.id}
             />
         </View>
     )
@@ -184,8 +184,8 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
     addText: {
-        color: '#ffffff', 
-        textAlign: 'center', 
+        color: '#ffffff',
+        textAlign: 'center',
         fontWeight: 'bold',
     },
     toggleButton: {
