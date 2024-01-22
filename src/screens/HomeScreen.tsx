@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Animated, Button, Dimensions, LayoutAnimation, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import { HomeTabNavigationProp } from '../navigation/types/types'
@@ -6,15 +6,19 @@ import { v4 as uuidv4 } from 'uuid';
 import React from "react";
 import 'react-native-get-random-values';
 import { useDispatch, useSelector } from "react-redux";
-import { addTask, updateTask, deleteTask } from "../store/slices/tasks";
+import { addTask, updateTask, deleteTask, fetchTasks } from "../store/slices/tasks";
 import { RootState } from "../store/slices";
 import { AppDispatch } from "../store";
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getUserId } from "../utils/session";
 
 type Props = {};
 export interface IToDo {
     id: string;
     text: string;
     completed: boolean;
+    userId: string;
 }
 
 export function HomeScreen() {
@@ -23,13 +27,28 @@ export function HomeScreen() {
     const dispatch = useDispatch<AppDispatch>();
     const toDos = useSelector((state: RootState) => state.tasks);
     const [newTodo, setNewTodo] = useState<string>("");
+    const [userId, setUserId] = useState('');
 
     const [error, showError] = useState<Boolean>(false);
     const [animationValues, setAnimationValues] = useState(toDos.map(() => new Animated.Value(1)));
 
-    const handleSubmit = (): void => {
+
+    useEffect(() => {
+        const init = async () => {
+            const storedUserId = await getUserId();
+            setUserId(storedUserId); 
+            if (storedUserId) {
+                dispatch(fetchTasks(storedUserId));
+            }
+        };
+
+        init();
+    }, [dispatch]);
+
+    const handleSubmit = async (): Promise<void> => {
         if (newTodo.trim()) {
-            const newTask = { id: uuidv4(), text: newTodo, completed: false };
+            const userId = await AsyncStorage.getItem("userId") || '';
+            const newTask = { id: uuidv4(), text: newTodo, completed: false, userId: userId };
             dispatch(addTask(newTask));
             showError(false);
         }
@@ -53,7 +72,6 @@ export function HomeScreen() {
         dispatch(deleteTask(id));
     };
     return (
-
         <View style={styles.container}>
             <View style={styles.inputWrapper}>
                 <TextInput
@@ -102,7 +120,11 @@ export function HomeScreen() {
                             style={styles.deleteButton}
                             onPress={() => { removeItem(toDo.id) }}
                         >
-                            <Text>X</Text>
+                            <Ionicons
+                                name="trash-outline"
+                                size={20}
+                                color="white"
+                            />
                         </TouchableOpacity>
                     </View>
                 </Animated.View>
@@ -157,12 +179,11 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
     addText: {
-        color: '#ffffff', // Example text color
-        textAlign: 'center', // Centers text in the button
+        color: '#ffffff', 
+        textAlign: 'center', 
         fontWeight: 'bold',
     },
     toggleButton: {
-        width: 100,
         backgroundColor: "green",
         padding: 10,
         alignSelf: "center",
@@ -170,10 +191,12 @@ const styles = StyleSheet.create({
     deleteButton: {
         backgroundColor: "red",
         marginStart: 10,
-        padding: 10
+        padding: 10,
+        alignContent: "center"
     },
     task: {
         flex: 1,
+        fontSize: 20,
     },
     error: {
         color: "red",

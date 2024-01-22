@@ -35,6 +35,7 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         login: (state, action: PayloadAction<AuthState>) => {
+            AsyncStorage.setItem('userId', action.payload.user?.uid || '');
             return action.payload;
         },
     },

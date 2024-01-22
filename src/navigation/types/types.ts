@@ -30,6 +30,12 @@ import type {
   NativeStackNavigationProp<HomeStackParamList, 'Home'>,
   NativeStackNavigationProp<RootStackParamList>
 >;
+
+export type DetailsScreenRouteProp = RouteProp<
+HomeStackParamList,
+'Details'
+>;
+
   
   export type SettingStackParamList = {
     Settings: undefined;

@@ -26,7 +26,7 @@ export default function TaskDetail() {
                         onPress={handleDelete}
                     />
                     <Ionicons
-                        name="create-outline"
+                        name="checkmark"
                         size={25}
                         color="black"
                         onPress={() => handleUpdate(value)}

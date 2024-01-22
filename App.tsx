@@ -11,6 +11,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import SettingScreen from "./src/screens/SettingScreen";
 import { RootState } from "./src/store/slices";
 import { RootStackParamList } from "./src/navigation/types/types";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 const AppStack = createNativeStackNavigator<RootStackParamList>();
 const HomeStack = createNativeStackNavigator();
@@ -32,7 +33,7 @@ export default function App() {
               component={MainTabs}
               options={{
                 headerShown: false,
-              }} 
+              }}
             />
           </AppStack.Navigator>
         </NavigationContainer>
@@ -43,10 +44,24 @@ export default function App() {
 
 function MainTabs() {
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false ,}}>
-      <Tab.Screen name="HomeTab" component={HomeTab} options={{ tabBarLabel: 'Home' }}>
+    <Tab.Navigator screenOptions={{ headerShown: false}}>
+      <Tab.Screen name="HomeTab" component={HomeTab}
+        options={{
+          tabBarLabel: 'Home',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="home" color={color} size={size} />
+          ),
+          tabBarHideOnKeyboard: true,
+        }}>
       </Tab.Screen>
-      <Tab.Screen name="SettingsTab" component={SettingTab} options={{ tabBarLabel: 'Settings' }}>
+      <Tab.Screen name="SettingsTab" component={SettingTab}
+        options={{
+          tabBarLabel: 'Settings',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="settings" color={color} size={size} />
+          ),
+          tabBarHideOnKeyboard: true,
+        }}>
       </Tab.Screen>
     </Tab.Navigator>
   )
