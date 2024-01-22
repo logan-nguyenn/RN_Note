@@ -14,13 +14,16 @@ export default function App() {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="SignIn">
-          <Stack.Screen name="SignIn" component={SignInScreen} />
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="Details" component={TaskDetail} />
-        </Stack.Navigator>
-      </NavigationContainer>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="SignIn">
+            <Stack.Screen name="SignIn" component={SignInScreen} />
+            <Stack.Screen name="Home" component={HomeScreen}
+              options={{
+                headerBackVisible: false,
+              }} />
+            <Stack.Screen name="Details" component={TaskDetail} />
+          </Stack.Navigator>
+        </NavigationContainer>
       </PersistGate>
     </Provider>
   )

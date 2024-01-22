@@ -1,9 +1,12 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IToDo } from '../../screens/HomeScreen';
+import firestore from '@react-native-firebase/firestore';
 
 export type TasksState = IToDo[];
 
 const initialState: TasksState = [];
+
+const userId = '1234567890';
 
 const tasksSlice = createSlice({
   name: 'tasks',
@@ -21,9 +24,6 @@ const tasksSlice = createSlice({
     addTask: (state, action: PayloadAction<IToDo>) => {
       state.push(action.payload);
     },
-    default: (state, action: PayloadAction<any>) => {
-      return state;
-    }
   },
 });
 

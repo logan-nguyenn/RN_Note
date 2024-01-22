@@ -56,6 +56,7 @@ export default function TaskDetail() {
                 value={value}
                 onChangeText={setValue}
                 style={styles.input}
+                multiline={true}
             />      
         </View>
     );
@@ -66,14 +67,15 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
     },
     input: {
         borderWidth: 1,
         borderColor: 'gray',
-        width: '80%',
+        width: '90%',
         height: '50%',
+        margin: 20,
         padding: 10,
-        marginBottom: 20,
+        textAlignVertical: 'top',
     },
 });

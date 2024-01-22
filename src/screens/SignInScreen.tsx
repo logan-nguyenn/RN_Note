@@ -4,21 +4,24 @@ import React, { useEffect, useState } from 'react';
 import { Alert, Button, StyleSheet, View } from 'react-native';
 import { SignInNavigatorParamList } from '../navigation/types/types';
 import { FIREBASE_IOS_KEY, FIREBASE_WEB_KEY } from '@env';
-import { useDispatch } from 'react-redux';
-import { login } from '../store/slices/auth';
+import { useDispatch, useSelector } from 'react-redux';
+import { login, logout } from '../store/slices/auth';
+import { RootState } from '../store/slices';
 
 
 const SignInScreen: React.FC<SignInNavigatorParamList> = ({ navigation }) => {
-    const [initializing, setInitializing] = useState(true);
+    const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
     const dispatch = useDispatch();
 
     useEffect(() => {
         GoogleSignin.configure({
-            webClientId: FIREBASE_WEB_KEY, 
+            webClientId: FIREBASE_WEB_KEY,
             iosClientId: FIREBASE_IOS_KEY,
         });
+    }, []);
 
-        const subscriber = auth().onAuthStateChanged(async (user) => {
+    useEffect(() => {
+        const subscriber = auth().onAuthStateChanged((user) => {
             if (user) {
                 const userInfo = {
                     uid: user.uid,
@@ -26,14 +29,19 @@ const SignInScreen: React.FC<SignInNavigatorParamList> = ({ navigation }) => {
                     email: user.email,
                     photoURL: user.photoURL,
                 }
-                dispatch(login({user: userInfo, isLoggedIn: true}));
-                navigation.navigate('Home');
+                dispatch(login({ user: userInfo, isLoggedIn: true }));
             } else {
-                setInitializing(false);
+                dispatch(logout());
             }
         });
         return subscriber; // unsubscribe on unmount
-    }, [initializing, navigation]);
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            navigation.navigate('Home');
+        }
+    }, [isLoggedIn, navigation]);
 
     const signInWithGoogle = async () => {
         try {
@@ -50,7 +58,6 @@ const SignInScreen: React.FC<SignInNavigatorParamList> = ({ navigation }) => {
             }
         }
     };
-    if (initializing) return null;
     return (
         <View style={styles.container}>
             <GoogleSigninButton

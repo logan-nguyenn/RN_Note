@@ -9,14 +9,14 @@ export interface RootState {
   auth: AuthState;
 }
 
-const persistConfig = {
+const rootPersistConfig = {
   key: 'root',
   storage: AsyncStorage,
+  whitelist: ['auth', 'tasks'],
  };
 
 const rootReducer = combineReducers({
   tasks: tasksReducer,
-  auth: persistReducer(persistConfig, authReducer),
+  auth: persistReducer(rootPersistConfig, authReducer),
 });
-
-export default rootReducer;
+export default persistReducer(rootPersistConfig, rootReducer);

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Animated, Button, LayoutAnimation, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Animated, Button, Dimensions, LayoutAnimation, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import { HomeScreenNavigationProp } from '../navigation/types/types'
 import { v4 as uuidv4 } from 'uuid';
@@ -55,7 +55,6 @@ export function HomeScreen() {
     return (
 
         <View style={styles.container}>
-            <Text style={styles.title}>Todo List</Text>
             <View style={styles.inputWrapper}>
                 <TextInput
                     placeholder="Enter your todo task"
@@ -66,7 +65,9 @@ export function HomeScreen() {
                     }}
                     style={styles.inputBox}
                 />
-                <Button title="Add Task" onPress={handleSubmit} />
+                <TouchableOpacity onPress={handleSubmit} style={styles.addButton}>
+                    <Text style={styles.addText}>Add Task</Text>
+                </TouchableOpacity>
             </View>
             {error && (
                 <Text style={styles.error}>Error: Input field is empty</Text>
@@ -110,6 +111,7 @@ export function HomeScreen() {
     )
 }
 
+const { width } = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
     container: {
@@ -129,7 +131,7 @@ const styles = StyleSheet.create({
         textDecorationLine: "underline"
     },
     inputBox: {
-        width: 250,
+        width: width * 0.7,
         borderColor: "purple",
         borderRadius: 8,
         borderWidth: 2,
@@ -149,11 +151,18 @@ const styles = StyleSheet.create({
     },
     addButton: {
         alignItems: "flex-end",
+        alignSelf: "center",
         backgroundColor: "purple",
+        padding: 10,
+        borderRadius: 5,
+    },
+    addText: {
+        color: '#ffffff', // Example text color
+        textAlign: 'center', // Centers text in the button
+        fontWeight: 'bold',
     },
     toggleButton: {
         backgroundColor: "green",
-        width: 100,
         padding: 10,
         alignSelf: "center",
     },
