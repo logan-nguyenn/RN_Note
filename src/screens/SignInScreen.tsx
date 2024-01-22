@@ -2,22 +2,23 @@ import auth from '@react-native-firebase/auth';
 import { GoogleSignin, GoogleSigninButton } from '@react-native-google-signin/google-signin';
 import React, { useEffect, useState } from 'react';
 import { Alert, Button, StyleSheet, View } from 'react-native';
-import { SignInNavigatorParamList } from '../navigation/types/types';
 import { FIREBASE_IOS_KEY, FIREBASE_WEB_KEY } from '@env';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, logout } from '../store/slices/auth';
 import { RootState } from '../store/slices';
+import { AppDispatch } from '../store';
+import { configureGoogleSignin, signInWithGoogle } from '../services/auth';
+import { useNavigation } from '@react-navigation/native';
+import { SignInScreenNavigationProp } from '../navigation/types/types';
 
 
-const SignInScreen: React.FC<SignInNavigatorParamList> = ({ navigation }) => {
-    const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
-    const dispatch = useDispatch();
+const SignInScreen = () => {
+    const dispatch = useDispatch<AppDispatch>();
+    const navigation = useNavigation<SignInScreenNavigationProp>(); 
 
     useEffect(() => {
-        GoogleSignin.configure({
-            webClientId: FIREBASE_WEB_KEY,
-            iosClientId: FIREBASE_IOS_KEY,
-        });
+        configureGoogleSignin()
+        const user = auth().currentUser;
     }, []);
 
     useEffect(() => {
@@ -30,34 +31,12 @@ const SignInScreen: React.FC<SignInNavigatorParamList> = ({ navigation }) => {
                     photoURL: user.photoURL,
                 }
                 dispatch(login({ user: userInfo, isLoggedIn: true }));
-            } else {
-                dispatch(logout());
+                navigation.navigate('Main');
             }
         });
         return subscriber; // unsubscribe on unmount
     }, [dispatch]);
 
-    useEffect(() => {
-        if (isLoggedIn) {
-            navigation.navigate('Home');
-        }
-    }, [isLoggedIn, navigation]);
-
-    const signInWithGoogle = async () => {
-        try {
-            await GoogleSignin.hasPlayServices();
-            const { idToken } = await GoogleSignin.signIn();
-            const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-            await auth().signInWithCredential(googleCredential);
-        } catch (error) {
-            if (error instanceof Error) {
-                console.log(error.message);
-                Alert.alert('Sign in Error', error.message);
-            } else {
-                Alert.alert('Sign in Error', 'An unknown error occurred');
-            }
-        }
-    };
     return (
         <View style={styles.container}>
             <GoogleSigninButton

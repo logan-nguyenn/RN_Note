@@ -12,7 +12,6 @@ export interface RootState {
 const rootPersistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['auth', 'tasks'],
  };
 
 const rootReducer = combineReducers({

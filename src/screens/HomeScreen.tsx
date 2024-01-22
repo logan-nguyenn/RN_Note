@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Animated, Button, Dimensions, LayoutAnimation, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { useNavigation } from '@react-navigation/native';
-import { HomeScreenNavigationProp } from '../navigation/types/types'
+import { HomeTabNavigationProp } from '../navigation/types/types'
 import { v4 as uuidv4 } from 'uuid';
 import React from "react";
 import 'react-native-get-random-values';
@@ -18,7 +18,7 @@ export interface IToDo {
 }
 
 export function HomeScreen() {
-    const navigation = useNavigation<HomeScreenNavigationProp>();
+    const navigation = useNavigation<HomeTabNavigationProp>();
 
     const dispatch = useDispatch<AppDispatch>();
     const toDos = useSelector((state: RootState) => state.tasks);
@@ -162,6 +162,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     toggleButton: {
+        width: 100,
         backgroundColor: "green",
         padding: 10,
         alignSelf: "center",

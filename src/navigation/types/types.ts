@@ -7,32 +7,45 @@ import type {
   import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
   import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 
-  
-  export type SignInNavigatorParamList = {
-    navigation: NavigationProp<ParamListBase>;
+  export type RootStackParamList = {
+    SignIn: undefined;
+    Main: undefined;
   };
-
-  export type HomeStackNavigatorParamList = {
+  
+  export type BottomTabParamList = {
+    Home: undefined; 
+    Settings: undefined;
+  };
+  
+  export type HomeStackParamList = {
     Home: undefined;
     Details: {
       id: string;
       text: string;
-      completed: boolean;
+      completed: boolean; 
     };
   };
 
-  export type HomeScreenNavigationProp = CompositeNavigationProp<
-    NativeStackNavigationProp<HomeStackNavigatorParamList, 'Details'>,
-    BottomTabNavigationProp<BottomTabNavigatorParamList, 'Completed'>
-  >;
+  export type HomeTabNavigationProp = CompositeNavigationProp<
+  NativeStackNavigationProp<HomeStackParamList, 'Home'>,
+  NativeStackNavigationProp<RootStackParamList>
+>;
   
-  export type DetailsScreenRouteProp = RouteProp<
-    HomeStackNavigatorParamList,
-    'Details'
-  >;
-
-  export type BottomTabNavigatorParamList = {
-    HomeStack: HomeStackNavigatorParamList;
-    Completed: undefined;
+  export type SettingStackParamList = {
     Settings: undefined;
   };
+
+  export type SettingScreenNavigationProp = CompositeNavigationProp<
+  NativeStackNavigationProp<SettingStackParamList, 'Settings'>,
+  NativeStackNavigationProp<RootStackParamList>
+>;
+
+export type SignInStackParamList = {
+  SignIn: undefined;
+};
+export type SignInScreenNavigationProp = CompositeNavigationProp<
+NativeStackNavigationProp<SignInStackParamList, 'SignIn'>,
+NativeStackNavigationProp<RootStackParamList>
+>;
+
+  

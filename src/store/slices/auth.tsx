@@ -1,12 +1,13 @@
-import { User } from "@react-native-google-signin/google-signin";
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { signOut } from "../../services/auth";
+import { persistor } from "..";
 
 export interface UserInfo {
     uid: string;
     displayName: string | null;
     email: string | null;
     photoURL: string | null;
-    // Add other needed fields
 }
 export interface AuthState {
     isLoggedIn: boolean;
@@ -18,6 +19,17 @@ const initialState: AuthState = {
     user: null,
 }
 
+export const logout = createAsyncThunk('auth/logout', async () => {
+    await persistor.purge();
+    await AsyncStorage.clear();
+    await signOut();
+    return {
+       isLoggedIn: false,
+       user: null,
+    };
+   });
+   
+
 const authSlice = createSlice({
     name: 'auth',
     initialState,
@@ -25,14 +37,13 @@ const authSlice = createSlice({
         login: (state, action: PayloadAction<AuthState>) => {
             return action.payload;
         },
-        logout: (state) => {
-            return {
-                isLoggedIn: false,
-                user: null,
-            };
-        },
     },
+    extraReducers: (builder) => {
+        builder.addCase(logout.fulfilled, (state, action) => {
+          return action.payload;
+        });
+     },
 });
 
-export const { login, logout } = authSlice.actions;
+export const { login } = authSlice.actions;
 export default authSlice.reducer;
