@@ -44,7 +44,7 @@ export default function App() {
 
 function MainTabs() {
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false}}>
+    <Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen name="HomeTab" component={HomeTab}
         options={{
           tabBarLabel: 'Home',

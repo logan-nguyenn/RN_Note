@@ -8,8 +8,10 @@ import { login, logout } from '../store/slices/auth';
 import { RootState } from '../store/slices';
 import { AppDispatch } from '../store';
 import { configureGoogleSignin, signInWithGoogle } from '../services/auth';
-import { useNavigation } from '@react-navigation/native';
-import { SignInScreenNavigationProp } from '../navigation/types/types';
+import { CommonActions, useNavigation } from '@react-navigation/native';
+import { RootStackParamList, SignInScreenNavigationProp } from '../navigation/types/types';
+import { getUserId } from '../utils/session';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 
 const SignInScreen = () => {
@@ -18,23 +20,44 @@ const SignInScreen = () => {
 
     useEffect(() => {
         configureGoogleSignin()
-        const user = auth().currentUser;
     }, []);
 
     useEffect(() => {
-        const subscriber = auth().onAuthStateChanged((user) => {
-            if (user) {
-                const userInfo = {
-                    uid: user.uid,
-                    displayName: user.displayName,
-                    email: user.email,
-                    photoURL: user.photoURL,
-                }
-                dispatch(login({ user: userInfo, isLoggedIn: true }));
-                navigation.navigate('Main');
+        const init = async () => {
+            const storedUserId = await getUserId();
+            if (storedUserId !== '') {
+                navigation.dispatch(
+                    CommonActions.reset({
+                      index: 0,
+                      routes: [
+                        { name: 'Main' },
+                      ],
+                    })
+                  );
+            } else {
+                const subscriber = auth().onAuthStateChanged((user) => {
+                    if (user) {
+                        const userInfo = {
+                            uid: user.uid,
+                            displayName: user.displayName,
+                            email: user.email,
+                            photoURL: user.photoURL,
+                        }
+                        dispatch(login(user.uid));
+                        navigation.dispatch(
+                            CommonActions.reset({
+                              index: 0,
+                              routes: [
+                                { name: 'Main' },
+                              ],
+                            })
+                          );
+                    }
+                });
+                return subscriber; // unsubscribe on unmount
             }
-        });
-        return subscriber; // unsubscribe on unmount
+        }; 
+        init();
     }, [dispatch]);
 
     return (

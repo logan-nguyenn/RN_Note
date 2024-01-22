@@ -3,30 +3,13 @@ import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { signOut } from "../../services/auth";
 import { persistor } from "..";
 
-export interface UserInfo {
-    uid: string;
-    displayName: string | null;
-    email: string | null;
-    photoURL: string | null;
-}
-export interface AuthState {
-    isLoggedIn: boolean;
-    user: UserInfo | null;
-};
-
-const initialState: AuthState = {
-    isLoggedIn: false,
-    user: null,
-}
+const initialState: string = ''
 
 export const logout = createAsyncThunk('auth/logout', async () => {
     await persistor.purge();
     await AsyncStorage.clear();
     await signOut();
-    return {
-       isLoggedIn: false,
-       user: null,
-    };
+    return '';
    });
    
 
@@ -34,8 +17,8 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        login: (state, action: PayloadAction<AuthState>) => {
-            AsyncStorage.setItem('userId', action.payload.user?.uid || '');
+        login: (state, action: PayloadAction<string>) => {
+            AsyncStorage.setItem('userId', action.payload);
             return action.payload;
         },
     },

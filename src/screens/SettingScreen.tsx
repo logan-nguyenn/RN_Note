@@ -3,7 +3,7 @@ import { Button, StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { logout } from '../store/slices/auth'; // Import the action to clear persist data
 import { AppDispatch } from '../store';
-import { useNavigation } from '@react-navigation/native';
+import { CommonActions, useNavigation } from '@react-navigation/native';
 import { SettingScreenNavigationProp, SettingStackParamList } from '../navigation/types/types';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
@@ -14,7 +14,14 @@ export default function SettingScreen() {
  const handleLogout = () => {
     dispatch(logout())
         .then(() => {
-            navigation.navigate('SignIn');
+            navigation.dispatch(
+                CommonActions.reset({
+                  index: 0,
+                  routes: [
+                    { name: 'SignIn' },
+                  ],
+                })
+              );
         });
  };
 

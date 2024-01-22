@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Animated, Button, Dimensions, LayoutAnimation, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Animated, Button, Dimensions, FlatList, LayoutAnimation, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import { HomeTabNavigationProp } from '../navigation/types/types'
 import { v4 as uuidv4 } from 'uuid';
@@ -92,33 +92,35 @@ export function HomeScreen() {
             )}
             <Text style={styles.subtitle}>Your tasks: </Text>
             {toDos.length === 0 && <Text>No to do task available</Text>}
-            {toDos.map((toDo: IToDo, index: number) => (
+            <FlatList
+            data={toDos}
+            renderItem={({ item, index }) => (
                 <Animated.View
                     style={{
                         opacity: animationValues[index],
                     }}
-                    key={`${index}_${toDo.text}`}
+                    key={`${index}_${item.text}`}
                 >
-                    <View style={styles.listItem} key={`${index}_${toDo.text}`}>
+                    <View style={styles.listItem} key={`${index}_${item.text}`}>
                         <Text
                             style={[
                                 styles.task,
-                                { textDecorationLine: toDo.completed ? "line-through" : "none" }
+                                { textDecorationLine: item.completed ? "line-through" : "none" }
                             ]}
-                            onPress={() => openTaskDetail(toDo)}
+                            onPress={() => openTaskDetail(item)}
                         >
-                            {toDo.text}
+                            {item.text}
                         </Text>
                         <TouchableOpacity
                             style={styles.toggleButton}
-                            onPress={() => { toggleComplete(toDo) }}
+                            onPress={() => { toggleComplete(item) }}
                         >
-                            <Text>{toDo.completed ? "UnDo" : "Complete"}</Text>
+                            <Text>{item.completed ? "UnDo" : "Complete"}</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity
                             style={styles.deleteButton}
-                            onPress={() => { removeItem(toDo.id) }}
+                            onPress={() => { removeItem(item.id) }}
                         >
                             <Ionicons
                                 name="trash-outline"
@@ -128,7 +130,10 @@ export function HomeScreen() {
                         </TouchableOpacity>
                     </View>
                 </Animated.View>
-            ))}
+        
+            )}
+            keyExtractor={item => item.id}
+            />
         </View>
     )
 }
